@@ -1,4 +1,4 @@
-version: '3.8' 
+version: '3.8'
 
 services:
   prometheus:
@@ -6,9 +6,9 @@ services:
     container_name: prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - grafana_data:/var/lib/grafana
+      - prometheus_data:/prometheus
     ports:
-      - "9090:9090" 
+      - "9090:9090"
     networks:
       - monitoring
   grafana:
@@ -17,16 +17,18 @@ services:
     ports:
       - "5000:3000"
     environment:
-      - GF_SECURITY_ADMIN_USER=admin 
-      - GF_SECURITY_ADMIN_PASSWORD=admin 
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
       - grafana_data:/var/lib/grafana
     networks:
       - monitoring
+
 networks:
   monitoring:
     name: monitoring
     external: true
+
 volumes:
   grafana_data:
   prometheus_data:
